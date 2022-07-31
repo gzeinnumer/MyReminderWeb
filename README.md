@@ -1,2 +1,771 @@
 # MyReminderWeb
- 
+
+#
+#### Laravel Where Not In
+```php
+$crashedCarIds = CrashedCar::pluck('car_id')->all();
+$cars = Car::whereNotIn('id', $crashedCarIds)->select(...)->get();
+```
+
+#
+#### Html Head Icon
+```
+//public/img/logo-color-v2.png
+<link rel="shortcut icon" href="{!! url('img/logo-color-v2.png') !!}" />
+```
+
+#
+#### Html Select Dymanic Js
+
+- [Source](https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_select_add3)
+
+- Example 1
+```html
+<div class="form-group">
+  <label for="products_id">Product</label>
+  <select name="products_id" id="products_id" class="form-control" aria-label="Default select example" required>
+    <option disabled selected value="">Select Product</option>
+  </select>
+</div>
+<br>
+<div class="form-group">
+  <label for="product_name">Product Name</label>
+  <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Product Name" required oninvalid="searchProduct('')" onkeyup="searchProduct('')" onchange="searchProduct('')" required>
+</div>
+<br>
+<div class="row justify-content-end p-2">
+  <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+</div>
+```
+- Example 2
+```html
+<div class="mb-3">
+  <label class="form-label">Find Product</label>
+  <div class="input-group mb-2">
+    <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Product Name" required oninvalid="searchProduct('')" onkeyup="searchProduct('')" onchange="searchProduct('')" required>
+
+    <select name="products_id" id="products_id" class="form-control" aria-label="Default select example" required>
+      <option disabled selected value="">Select Product</option>
+    </select>
+    <button class="btn" type="button" onclick="cariBarang()">Search</button>
+  </div>
+</div>
+```
+```php
+public function findbynameall($name)
+{
+    $data = ProductsModel::where('product_name', 'like', "%$name%")->get();
+    return json_encode($data);
+}
+```
+```js
+<script type="text/javascript">
+  function searchProduct(data) {
+    var product_name = document.getElementById("product_name").value;
+
+    $.ajax({
+      url: '/products/findbynameall/' + product_name,
+      type: "GET",
+      dataType: "JSON",
+      success: function(data) {
+      //array data data
+        var x = document.getElementById("products_id");
+        x.innerHTML = "";
+        var optiondis = document.createElement("option");
+        optiondis.text = "Select Product";
+        optiondis.disabled = true;
+        optiondis.selected = true;
+        x.add(optiondis);
+
+        for (let index = 0; index < data.length; index++) {
+          const element = data[index];
+
+          var option = document.createElement("option");
+          option.text = element.product_name;
+          option.value = element.id;
+          x.add(option);
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        alert('Gagal mendapatkan data');
+      }
+    });
+  }
+</script>
+```
+
+#
+#### Ajax
+```php
+public function warningTask()
+    {
+        return [
+            "data" => "asdsa"
+        ];
+    }
+```
+```php
+Route::get('/home/warningtask', [HomeController::class, 'warningTask']);
+```
+```html
+<script type="text/javascript">
+    $(function() {
+        warningTask();
+    });
+
+    function warningTask() {
+        $.ajax({
+            url: '/home/warningtask',
+            type: "GET",
+            dataType: "JSON",
+            success: function(data) {
+                alert(data.data)
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('Gagal mendapatkan data' + errorThrown.message);
+            }
+        });
+    }
+</script>
+```
+
+#
+#### PHP Date Space Count
+```php
+$earlier = new DateTime("2022-07-01");
+$later = new DateTime("2022-07-04");
+
+$data[$i]->waktu = $later->diff($earlier)->format("%a"); //3
+```
+
+#
+#### LARAVEL IMG SRC PUBLIC
+```php
+<img class="cover header__photo-img" src="{{ url(''.$generatorList->img.'') }}">
+```
+
+#
+#### PHP NATIV BASE URL IN INDEX
+
+```php
+<?php
+
+function home_base_url()
+{
+  $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https://' : 'http://';
+  $tmpURL = dirname(__FILE__);
+  $tmpURL = str_replace(chr(92), '/', $tmpURL);
+  $tmpURL = str_replace($_SERVER['DOCUMENT_ROOT'], '', $tmpURL);
+  $tmpURL = ltrim($tmpURL, '/');
+  $tmpURL = rtrim($tmpURL, '/');
+  if (strpos($tmpURL, '/')) {
+    $tmpURL = explode('/', $tmpURL);
+    $tmpURL = $tmpURL[0];
+  }
+  if ($tmpURL !== $_SERVER['HTTP_HOST'])
+    $base_url .= $_SERVER['HTTP_HOST'] . '/' . $tmpURL . '/';
+  else
+    $base_url .= $tmpURL . '/';
+  return $base_url;
+}
+
+?>
+
+<?php echo home_base_url(); ?>
+```
+
+#
+#### Array Unik Duplicate Array PHP
+```php
+$out = Trans_product_outModel::select()->get();
+$products_id = [];
+for ($i = 0; $i < count($out); $i++) {
+    $products_id[] = $out[$i]->products_id;
+}
+$products_id = array_unique($products_id);
+$products_id = array_values($products_id);
+```
+
+#
+#### Laravel Params Get
+```php
+{{ Request::segment(1) }}
+{{ Request::path() }}
+{{ request()->a }}
+{{ app('request')->input('page') }}
+{{ request()->get('date') }}
+```
+```js
+const currentLocation = window.location + "";
+const id = currentLocation.split('/');
+id[5];
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+var date = urlParams.get('date'); ?date=2022-06-22
+```
+
+#
+#### Laravel HtAccess
+
+- .htaccess
+
+```
+<IfModule mod_rewrite.c>
+
+RewriteEngine On
+
+RewriteRule ^(.*)$ public/$1 [L]
+
+</IfModule>
+```
+
+#
+#### Laravel DataTables Custom Column
+
+[Source](https://adinata-id.medium.com/server-side-datatables-menggunakan-yajra-1-pada-laravel-adminlte-c101f1276085)
+
+```html
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.8/css/rowReorder.bootstrap4.min.css" />
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>
+```
+
+```html
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">List Data Products</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" id="myDatatable" style="width: 100%;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>No</th>
+                        <td>Name</td>
+                        <td>Active</td>
+                        <td>Created at</td>
+                        <td>Updated at</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        var url = window.location.href;
+        var jsonData = paramsToJson(url);
+        var table = $('#myDatatable').DataTable({
+            processing: true,
+            serverSide: true,
+            autowidth: false,
+            scrollX: true,
+            order: [
+                [1, 'asc']
+            ],
+            ajax: {
+                type: 'GET',
+                url: "{{ route('products.data') }}",
+                data: JSON.parse(jsonData)
+            },
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false,
+                    width: '15px'
+                },
+                {
+                    data: 'name',
+                    name: 'name',
+                },
+                {
+                    data: 'flag_active',
+                    name: 'flag_active',
+                    width: '30px',
+                    render: function(data, type, row) {
+                        if (data == 1) {
+                            return '<span class="badge badge-sm bg-green text-uppercase ">Active</span>';
+                        } else {
+                            return '<span class="badge badge-sm bg-red text-uppercase ">Inactive</span>';
+                        }
+                    }
+                },
+                {
+                    data: 'created_at',
+                    name: 'created_at',
+                    width: '125px'
+                },
+                {
+                    data: 'updated_at',
+                    name: 'updated_at',
+                    width: '125px'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false,
+                    width: '125px'
+                },
+            ],
+            language: {
+                paginate: {
+                    next: '&#8594;', // or '→'
+                    previous: '&#8592;', // or '←'
+                }
+            }
+        });
+    });
+</script>
+```
+```php
+class ProductsController extends Controller
+{
+    //dataTables
+    public function dataTables(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $this->getData($request);
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $actionBtn = "<td>aksi</td>";
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
+    public function getData(Request $request, $flag_active = "")
+    {
+        $date_start = $request->get("date_start");
+        $date_end = $request->get("date_end");
+
+        $data = ProductsModel::select();
+
+        if ($flag_active != "") {
+            $data = $data->where("products.flag_active", "=", $flag_active);
+        }
+
+        if ($date_start != "" && $date_end != "") {
+            $data = $data->wherebetween("products.created_at", array($date_start . " 00:00:00", $date_end . " 23:59:59"));
+        } else if ($date_start != "") {
+            $data = $data->where("products.created_at", ">=", $date_start . " 00:00:00");
+        } else if ($date_end != "") {
+            $data = $data->where("products.created_at", "<=", $date_end . " 23:59:59");
+        }
+
+        $data = $data->orderBy('products.flag_active', 'desc');
+        $data = $data->get();;
+
+        return $data;
+    }
+}
+```
+
+#
+#### Web Upload Foto
+```php
+//use Illuminate\Support\Str;
+$file = $r->file('signature');
+$tujuan_upload = 'storage/photo/staffs';
+$generateName = Str::random(40) . "." . $file->getClientOriginalExtension();
+$file->move($tujuan_upload, $generateName);
+$photo = $tujuan_upload . "/" . $generateName;
+
+$staff->signature = $photo;
+```
+
+#
+#### forEach number no
+```php
+<?php $i = 0 ?>
+@foreach ($aaa as $value)
+<?php $i++ ?>
+    <tr>
+        <td>{{ $i}}</td>
+        <td>{{$value->name}}</td>
+    </tr>
+@endforeach
+```
+
+#
+#### TD Center
+```html
+<td style='text-align:center; vertical-align:middle'></td>
+```
+
+#
+#### Ajax Alert Data Success
+```js
+$(function() {
+    $.ajax({
+        url: '/home/flmchart',
+        type: "GET",
+        dataType: "JSON",
+        success: function(data) {
+            alert(JSON.stringify(data));
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Gagal mendapatkan data');
+        }
+    });
+});
+```
+
+#
+#### Js Current Time Date
+```js
+var m = new Date();
+var dateString =
+    m.getUTCFullYear() + "/" +
+    ("0" + (m.getUTCMonth()+1)).slice(-2) + "/" +
+    ("0" + m.getUTCDate()).slice(-2) + " " +
+    ("0" + m.getUTCHours()).slice(-2) + ":" +
+    ("0" + m.getUTCMinutes()).slice(-2) + ":" +
+    ("0" + m.getUTCSeconds()).slice(-2);
+
+console.log(dateString);
+```
+
+#
+#### Randomize (shuffle) JavaScript array JS
+```js
+const colors = ["#206bc4", "#4299e1", "#4263eb", "#ae3ec9", "#d6336c", "#d63939", "#f76707", "#f59f00", "#74b816", "#2fb344", "#0ca678", "#17a2b8", "#1e293b", "#626976"]
+shuffle(colors);
+
+//fun
+function shuffle(array) {
+    let currentIndex = array.length,
+        randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]
+        ];
+    }
+
+    return array;
+}
+```
+
+#
+#### Laravel Route
+
+```php
+Route::group(['namespace' => 'App\Http\Controllers'], function () {
+    Route::get('/', 'HomeController@index')->name('home.index');
+});
+```
+```php
+//laravel 8
+use App\Http\Controllers\UserController;
+Route::get('/users', [UserController::class, 'index']);
+// or
+Route::get('/users', 'App\Http\Controllers\UserController@index');
+```
+```php
+use App\Http\Controllers\API\PagingControllerZein;
+Route::prefix('paging')->group(function () {
+     Route::get('/paging', [PagingControllerZein::class, 'paging']); //127.0.0.1:8000/api/paging/paging
+});
+```
+#
+#### Laravel Flash Message
+```php
+Route::prefix('barang')->group(function () {
+    Route::get('/', [BarangController::class, 'index']); // /barang
+});
+```
+```php
+public function create(Request $r){
+    BarangModel::create($r->all());
+    return redirect('/barang')->with('sukses','Data berhasil diinput');
+}
+```
+```php
+@if(session('sukses'))
+<div class="alert alert-success" role="alert">
+  {{session('sukses')}}
+</div>
+@endif
+```
+```php
+Request $r = $r->all();
+
+if ($r->date != "")
+    return Redirect::to('/data/report/' . $r->tools_id . '?date=' . $r->date)->with('sukses', 'Success Insert Data');
+else
+    return Redirect::to('/data/report/' . $r->tools_id)->with('sukses', 'Success Insert Data');
+```
+#
+#### Laravel Route Name
+```php
+Route::prefix('barang')->group(function () {
+    Route::get('/', [BarangController::class, 'index'])->name('barang.index');
+    Route::post('/update', [BarangController::class, 'update'])->name('barang.update');
+});
+```
+```php
+<form action="{{ route('barang.update') }}" method="POST"></form>
+
+<form action="/barang/update" method="POST"></form>
+```
+```html
+<a href="/examples/export/{{Request::segment(3)}}?date={{request()->date}}" class="btn btn-yellow d-none d-sm-inline-block">
+Export
+</a>
+```
+#
+#### If demo
+```
+String detail = "";
+String type = "";
+String reason = "";
+String photo = "";
+/*
+true if all empty
+false if one fill
+*/
+
+if (detail.length()==0 && type.length()==0 && reason.length()==0 && photo.length()==0){
+    Log.d(TAG, "onCreate: true delete data");
+} else {
+    Log.d(TAG, "onCreate: false simpan/update data ");
+}
+```
+
+#
+#### Laravel Title
+```html
+@yield('sidebar', \View::make('defaultSidebar'))
+```
+
+#
+#### Validate FileSize
+```java
+//return false if file size more than 20 mB
+public boolean validateFileSize(String path) {
+    File file = new File(path);
+
+    long fileSizeInBytes = file.length();
+    long fileSizeInKB = fileSizeInBytes / 1024;
+    long fileSizeInMB = fileSizeInKB / 1024;
+
+    return fileSizeInMB <= 20;
+}
+```
+
+#
+#### Laravel Auth Get Data
+```php
+{{ Auth::user()->id }}
+```
+
+#
+#### Collection
+```
+Collections.sort(listFilter, new Comparator<DataItem>() {
+    @Override
+    public int compare(DataItem o1, DataItem o2) {
+        return o1.getStrTv2().toLowerCase().compareTo(o2.getStrTv2().toLowerCase());
+    }
+});
+```
+
+#
+#### PHP JSON To Object
+
+```php
+$rawJson = "{ post: { text: 'my text' } }";
+$decodedAsArray = json_decode($rawJson, true);
+$innerPost = $decodedAsArray['post'];
+
+$post = new Post();
+$post->forceFill($innerPost);
+$post->save();
+```
+
+```php
+$post = new Post();
+foreach ($r->all() as $key => $value) {
+    $post->$key = $value;
+}
+$post->save();
+```
+
+#
+#### laravel Image Public
+```html
+<!-- public/uploads/myimage.jpg -->
+<img src="{{url('/uploads/myimage.jpg')}}" alt="Image"/>
+```
+
+#
+#### Laravel Public X Api X android
+```
+https://stackoverflow.com/questions/30675025/access-to-laravel-5-app-locally-from-an-external-device/30675683#30675683
+
+php artisan serve --host 0.0.0.0
+http://192.168.1.101:8000
+php artisan serve --host 0.0.0.0 --port 80
+http://192.168.1.101
+```
+https://demo-laravel.gzeinnumer.com/api/product/all
+http://192.168.1.10:8000/api/product/all
+
+
+#
+#### Node JS Express JS Starter
+```
+mkdir project_my
+npm init -y
+npm install -S express ejs
+npm app.js
+```
+```
+const express = require('express')
+const app = express()
+
+app.get('/params_input', (req, res) => {
+    //
+})
+
+```
+#
+#### Node JS Form Run Params
+```
+// var run = require('child_process');
+// run.fork(path + '/tools/model.js', ["BarangController"]); const data = process.argv[2];
+
+// require('shelljs').exec('node tools/templates/laravel_web/run.js', { body: req.body });
+// require('shelljs').exec('node tools/templates/laravel_web/run.js');
+```
+
+#
+#### Express JS Form
+```js
+app.post('/params_input', urlencodedParser, [
+
+], (req, res) => {
+    console.log('Got body:', req.body);
+})
+```
+```html
+<form action="/params_input" method="POST" novalidate>
+    <div class="form-group">
+        <label for="controllerName" class="form-label">controllerName</label>
+        <input type="text" class="form-control" name="controllerName" id="controllerName">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+```
+
+#
+#### Laravel Blade PHP Variable
+```php
+public function index(){
+    $data = BarangModel::all();
+    $sent = [
+        'data' => $data,
+        'find' => null
+    ];
+    return view('barang.index', $sent);
+}
+```
+```html
+<input name="id" @if(!empty($find)) value="{{$find->id}}" @endif>
+```
+
+#
+#### SQL ORDER BY NO ID
+```java
+String query = "SELECT *, ROW_NUMBER() OVER() as LineNo  FROM " + table + " order by LineNo DESC;";
+```
+
+#
+#### Laravel Key
+```
+php artisan key:generate
+```
+#
+#### Laravel Public
+```
+http://localhost/laravel_project/public
+
+or
+
+http://localhost/mylogin/public
+
+php artisan serve --host 0.0.0.0
+
+http://192.168.1.3:8000/api/login
+```
+#
+#### BottomNavigationView label always show
+```xml
+<com.google.android.material.bottomnavigation.BottomNavigationView
+    ...
+    app:labelVisibilityMode="labeled"
+    app:menu="@menu/bottom_navigation_menu_v1" />
+```
+#
+#### CI4 Redirect
+```php
+return redirect()->to('url');
+return redirect()->route('named_route');
+```
+#
+#### CI3 CI4 CodeIgnither Laravel
+
+- CI3
+```php
+$sql = "select * from users order by id desc;";
+$query = $this->db->query($sql);
+return $query->result_array();
+//echo $d['id'];;
+```
+
+- CI4
+```php
+$query = "SELECT * FROM product;";
+$db = \Config\Database::connect();
+$data = $db->query($query);
+
+// return json_encode($data->getResult());
+// return json_encode($query->getResultArray());
+// return json_encode($query->getRow());
+return $this->respond($data->getResult());
+```
+
+- Laravel
+```php
+$data = DB::select("SELECT kilometer FROM tyres WHERE usage=1 ORDER by id DESC LIMIT 1");
+
+Tyres::select('kilometer')->where('usage',1)->orderBy('id', 'DESC')->take(1)->get();
+```
+
+---
+
+```
+Copyright 2022 M. Fadli Zein
+```
