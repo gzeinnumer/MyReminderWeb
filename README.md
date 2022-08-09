@@ -261,6 +261,26 @@ RewriteRule ^(.*)$ public/$1 [L]
     </div>
 </div>
 <script type="text/javascript">
+    function paramsToJson(url) {
+        var params = url.substring(url.indexOf("?"));
+        var jsonData = "{";
+
+        if (url.includes("?")) {
+            params = params.replace("?", "");
+            params = params.split("&");
+            for (var i = 0; i < params.length; i++) {
+                var d = params[i];
+                d = d.split("=");
+                jsonData += "\"" + d[0] + "\":\"" + d[1] + "\",";
+            }
+            jsonData = jsonData.slice(0, -1);
+        } else {
+            params = "";
+        }
+        jsonData += "}";
+        return jsonData;
+    }
+    
     $(function() {
         var url = window.location.href;
         var jsonData = paramsToJson(url);
@@ -763,6 +783,88 @@ $data = DB::select("SELECT kilometer FROM tyres WHERE usage=1 ORDER by id DESC L
 
 Tyres::select('kilometer')->where('usage',1)->orderBy('id', 'DESC')->take(1)->get();
 ```
+
+#### Laravel Add Request
+```php
+$request->merge(['a' => 1]);
+```
+```
+{
+    "a" : "1"
+}
+```
+
+#### Laravel bcrypt Encript
+```
+$data->password = bcrypt($r->password);
+```
+
+#### PhpMyAdmin Time Zone
+```
+SET time_zone ='+08:00';
+```
+
+#### Laravel Time Zone
+- AppServiceProvider.php
+```php
+<?php
+
+namespace App\Providers;
+
+use Carbon\Carbon;
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+    
+    ...
+    
+    public function boot()
+    {
+        config(['app.locale' => 'id']);
+        Carbon::setLocale('id');
+        date_default_timezone_set('Asia/Jakarta');
+    }
+}
+```
+- app.php
+```php
+<?php
+
+use Illuminate\Support\Facades\Facade;
+
+return [
+
+    ...
+
+    'timezone' => 'Asia/Jakarta',
+
+    'locale' => 'id',
+
+    'fallback_locale' => 'id',
+
+    'faker_locale' => 'id_ID',
+
+    ...
+];
+```
+#### Html input number decimal
+```php
+<input step="any"/>
+```
+#### Html
+```php
+<input tabIndex="-1"/>
+```
+#### Ajax URL
+```js
+url: "{{ route('products.data') }}",
+```
+```js
+url: "/products/data",
+```
+
+
 
 ---
 
