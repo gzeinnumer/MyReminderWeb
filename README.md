@@ -863,6 +863,14 @@ url: "{{ route('products.data') }}",
 ```js
 url: "/products/data",
 ```
+#### HTML TABLE TD WRAPCONTENT
+```html
+<td style="width: 1px; white-space: nowrap;">{{$d->updated_at}}</td>
+```
+#### Update join table
+```sql
+UPDATE trans_product_out SET price = ( SELECT price FROM products WHERE trans_product_out.products_id = products.id );
+```
 
 
 
