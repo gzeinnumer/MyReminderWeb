@@ -9,7 +9,7 @@ $cars = Car::whereNotIn('id', $crashedCarIds)->select(...)->get();
 
 #
 #### Html Head Icon
-```
+```html
 //public/img/logo-color-v2.png
 <link rel="shortcut icon" href="{!! url('img/logo-color-v2.png') !!}" />
 ```
@@ -146,7 +146,6 @@ $data[$i]->waktu = $later->diff($earlier)->format("%a"); //3
 
 #
 #### PHP NATIV BASE URL IN INDEX
-
 ```php
 <?php
 
@@ -209,7 +208,6 @@ var date = urlParams.get('date'); ?date=2022-06-22
 #### Laravel HtAccess
 
 - .htaccess
-
 ```
 <IfModule mod_rewrite.c>
 
@@ -490,7 +488,6 @@ function shuffle(array) {
 
 #
 #### Laravel Route
-
 ```php
 Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::get('/', 'HomeController@index')->name('home.index');
@@ -509,6 +506,7 @@ Route::prefix('paging')->group(function () {
      Route::get('/paging', [PagingControllerZein::class, 'paging']); //127.0.0.1:8000/api/paging/paging
 });
 ```
+
 #
 #### Laravel Flash Message
 ```php
@@ -537,6 +535,7 @@ if ($r->date != "")
 else
     return Redirect::to('/data/report/' . $r->tools_id)->with('sukses', 'Success Insert Data');
 ```
+
 #
 #### Laravel Route Name
 ```php
@@ -555,6 +554,7 @@ Route::prefix('barang')->group(function () {
 Export
 </a>
 ```
+
 #
 #### If demo
 ```
@@ -614,7 +614,6 @@ Collections.sort(listFilter, new Comparator<DataItem>() {
 
 #
 #### PHP JSON To Object
-
 ```php
 $rawJson = "{ post: { text: 'my text' } }";
 $decodedAsArray = json_decode($rawJson, true);
@@ -669,8 +668,8 @@ const app = express()
 app.get('/params_input', (req, res) => {
     //
 })
-
 ```
+
 #
 #### Node JS Form Run Params
 ```
@@ -727,19 +726,23 @@ String query = "SELECT *, ROW_NUMBER() OVER() as LineNo  FROM " + table + " orde
 ```
 php artisan key:generate
 ```
+
 #
 #### Laravel Public
 ```
 http://localhost/laravel_project/public
-
+```
 or
-
+```
 http://localhost/mylogin/public
-
+```
+```
 php artisan serve --host 0.0.0.0
-
+```
+```
 http://192.168.1.3:8000/api/login
 ```
+
 #
 #### BottomNavigationView label always show
 ```xml
@@ -748,12 +751,14 @@ http://192.168.1.3:8000/api/login
     app:labelVisibilityMode="labeled"
     app:menu="@menu/bottom_navigation_menu_v1" />
 ```
+
 #
 #### CI4 Redirect
 ```php
 return redirect()->to('url');
 return redirect()->route('named_route');
 ```
+
 #
 #### CI3 CI4 CodeIgnither Laravel
 
@@ -764,7 +769,6 @@ $query = $this->db->query($sql);
 return $query->result_array();
 //echo $d['id'];;
 ```
-
 - CI4
 ```php
 $query = "SELECT * FROM product;";
@@ -776,7 +780,6 @@ $data = $db->query($query);
 // return json_encode($query->getRow());
 return $this->respond($data->getResult());
 ```
-
 - Laravel
 ```php
 $data = DB::select("SELECT kilometer FROM tyres WHERE usage=1 ORDER by id DESC LIMIT 1");
@@ -784,27 +787,32 @@ $data = DB::select("SELECT kilometer FROM tyres WHERE usage=1 ORDER by id DESC L
 Tyres::select('kilometer')->where('usage',1)->orderBy('id', 'DESC')->take(1)->get();
 ```
 
+#
 #### Laravel Add Request
 ```php
 $request->merge(['a' => 1]);
 ```
-```
+```json
 {
     "a" : "1"
 }
 ```
 
+#
 #### Laravel bcrypt Encript
 ```
 $data->password = bcrypt($r->password);
 ```
 
+#
 #### PhpMyAdmin Time Zone
 ```
 SET time_zone ='+08:00';
 ```
 
+#
 #### Laravel Time Zone
+
 - AppServiceProvider.php
 ```php
 <?php
@@ -827,6 +835,7 @@ class AppServiceProvider extends ServiceProvider
     }
 }
 ```
+
 - app.php
 ```php
 <?php
@@ -848,14 +857,20 @@ return [
     ...
 ];
 ```
+
+#
 #### Html input number decimal
 ```php
 <input step="any"/>
 ```
+
+#
 #### Html
 ```php
 <input tabIndex="-1"/>
 ```
+
+#
 #### Ajax URL
 ```js
 url: "{{ route('products.data') }}",
@@ -863,16 +878,64 @@ url: "{{ route('products.data') }}",
 ```js
 url: "/products/data",
 ```
+
+#
 #### HTML TABLE TD WRAPCONTENT
 ```html
 <td style="width: 1px; white-space: nowrap;">{{$d->updated_at}}</td>
 ```
+
+#
 #### Update join table
 ```sql
 UPDATE trans_product_out SET price = ( SELECT price FROM products WHERE trans_product_out.products_id = products.id );
 ```
 
+#
+#### Max + 1
+```php
+'order_no' => MenuHeadersModel::max('order_no') + 1
+```
 
+#
+#### HTML Table Horizontal Scroll
+```html
+<style>
+ .table_wrapper{
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+</style>
+
+<div class="table_wrapper">
+<table>
+...
+</table>
+</div>
+```
+
+#
+#### Php Combine Array
+```php
+$a = [
+    'a' => 1,
+    'b' => 2,
+];
+$b = [
+    'c' => 3,
+    'd' => 4,
+];
+$sent = array_merge($a, $b);
+
+//become
+$sent = [
+    'a' => 1,
+    'b' => 2,
+    'c' => 3,
+    'd' => 4,
+];
+```
 
 ---
 
