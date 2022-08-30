@@ -937,6 +937,55 @@ $sent = [
 ];
 ```
 
+#
+#### Auto Col Size
+
+[Source](https://www.w3schools.com/bootstrap/bootstrap_grid_examples.asp)
+
+```html
+<div class="row row-cards">
+  @foreach($params as $d)
+  <div class="col-sm-6 col-lg-4">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name[]" name="name[]" placeholder="" required>
+    </div>
+  </div>
+  @endforeach
+</div>
+```
+
+#
+#### Select Readonly Not Disabled
+```html
+<input disabled/>
+```
+```html
+<input style="pointer-events: none; background-color: #fafbfc;"/>
+```
+
+#
+#### PHP A To ZZ
+```php
+function excelColumnRange($lower, $upper) {
+    ++$upper;
+    for ($i = $lower; $i !== $upper; ++$i) {
+        yield $i;
+    }
+}
+
+foreach (excelColumnRange('A', 'ZZ') as $value) {
+    echo $value, PHP_EOL;
+}
+```
+
+#
+#### Laravel Border Excel
+
+[Source](https://docs.laravel-excel.com/2.1/reference-guide/borders.html)
+
+
+
 ---
 
 ```
