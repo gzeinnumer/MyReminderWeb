@@ -984,7 +984,13 @@ foreach (excelColumnRange('A', 'ZZ') as $value) {
 
 [Source](https://docs.laravel-excel.com/2.1/reference-guide/borders.html)
 
+#
+#### MySqlBackUp
 
+[Source](https://stackoverflow.com/questions/18022809/how-to-solve-error-mysql-shutdown-unexpectedly)
+
+|<img src="/preview/preview1.png" width="300"/>|
+|--|
 
 ---
 
