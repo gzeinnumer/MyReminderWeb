@@ -278,7 +278,7 @@ RewriteRule ^(.*)$ public/$1 [L]
         jsonData += "}";
         return jsonData;
     }
-    
+
     $(function() {
         var url = window.location.href;
         var jsonData = paramsToJson(url);
@@ -824,9 +824,9 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    
+
     ...
-    
+
     public function boot()
     {
         config(['app.locale' => 'id']);
@@ -877,6 +877,15 @@ url: "{{ route('products.data') }}",
 ```
 ```js
 url: "/products/data",
+```
+```js
+var base_url = window.location.origin;
+//localhost:8000
+var url = base_url + "/penyulang/byidgi/" + id;
+
+$.ajax({
+    url: url,
+});
 ```
 
 #
@@ -991,6 +1000,89 @@ foreach (excelColumnRange('A', 'ZZ') as $value) {
 
 |<img src="/preview/preview1.png" width="300"/>|
 |--|
+
+#
+#### Route 404 Laravel
+```
+composer install
+```
+```
+php artisan route:clear
+```
+```
+php artisan route:cache
+```
+
+#
+#### Redirect
+```
+->name('login');
+return redirect()->to('login');
+```
+
+#
+#### Datatables Render
+```
+render: function(data, type, row) {
+    if (data == null) {
+        return '-';
+    }
+    return data;
+}
+```
+
+#
+#### Flash Message
+```
+  <div class="row">
+    @if(session('sukses'))
+    <div class="alert alert-success" role="alert">
+      {{session('sukses')}}
+    </div>
+    @endif
+  </div>
+```
+```
+return redirect('/products')->with('sukses', 'Data successfully added');
+```
+
+#
+#### Web HTML ADD ITEM INSIDE DIV
+```js
+document.getElementById('gardu_photo').appendChild(element);
+```
+```js
+<html>
+<head>
+
+<script>
+
+function test() {
+
+    var element = document.createElement("div");
+    element.appendChild(document.createTextNode('The man who mistook his wife for a hat'));
+    document.getElementById('lc').appendChild(element);
+
+}
+
+</script>
+
+</head>
+<body>
+<input id="filter" type="text" placeholder="Enter your filter text here.." onkeyup = "test()" />
+
+<div id="lc" style="background: blue; height: 150px; width: 150px;
+}" onclick="test();">
+</div>
+</body>
+
+</html>
+```
+```js
+var div = document.getElementById('divID');
+
+div.innerHTML += '<p></p>';
+```
 
 ---
 
