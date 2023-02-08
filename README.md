@@ -966,6 +966,7 @@ $sent = [
 
 #
 #### Select Readonly Not Disabled
+
 ```html
 <input disabled/>
 ```
@@ -1015,14 +1016,14 @@ php artisan route:cache
 
 #
 #### Redirect
-```
+```php
 ->name('login');
 return redirect()->to('login');
 ```
 
 #
 #### Datatables Render
-```
+```js
 render: function(data, type, row) {
     if (data == null) {
         return '-';
@@ -1033,7 +1034,7 @@ render: function(data, type, row) {
 
 #
 #### Flash Message
-```
+```html
   <div class="row">
     @if(session('sukses'))
     <div class="alert alert-success" role="alert">
@@ -1042,7 +1043,7 @@ render: function(data, type, row) {
     @endif
   </div>
 ```
-```
+```php
 return redirect('/products')->with('sukses', 'Data successfully added');
 ```
 
@@ -1058,11 +1059,9 @@ document.getElementById('gardu_photo').appendChild(element);
 <script>
 
 function test() {
-
     var element = document.createElement("div");
     element.appendChild(document.createTextNode('The man who mistook his wife for a hat'));
     document.getElementById('lc').appendChild(element);
-
 }
 
 </script>
@@ -1071,8 +1070,7 @@ function test() {
 <body>
 <input id="filter" type="text" placeholder="Enter your filter text here.." onkeyup = "test()" />
 
-<div id="lc" style="background: blue; height: 150px; width: 150px;
-}" onclick="test();">
+<div id="lc" style="background: blue; height: 150px; width: 150px;" onclick="test();">
 </div>
 </body>
 
@@ -1082,6 +1080,14 @@ function test() {
 var div = document.getElementById('divID');
 
 div.innerHTML += '<p></p>';
+```
+
+#
+#### Foreach Loop
+```html
+@forEach($data as $d)
+    {{$loop->iteration}}
+@endforeach
 ```
 
 ---
