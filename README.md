@@ -535,6 +535,23 @@ if ($r->date != "")
 else
     return Redirect::to('/data/report/' . $r->tools_id)->with('sukses', 'Success Insert Data');
 ```
+```
+@if (\Session::has('success'))
+    <div class="alert alert-success">
+        <ul>
+            <li>{!! \Session::get('success') !!}</li>
+        </ul>
+    </div>
+@endif
+```
+```
+var Sessiondescription = "{{ \Session::has('success') }}";
+// var Sessiondescription = '@Session["success"]';
+if (Sessiondescription.length > 0) {
+    alert(Sessiondescription);
+    showModalSuccess('Perhatian', '{{ Session::get('success') }}');
+}
+```
 
 #
 #### Laravel Route Name
@@ -1089,6 +1106,53 @@ div.innerHTML += '<p></p>';
     {{$loop->iteration}}
 @endforeach
 ```
+
+#
+#### ARRAY TO OBJECT
+```
+json_decode (json_encode ($var), FALSE);
+```
+
+#
+#### Js Find Html
+```
+Route::get('/counttransaction', [HomeController::class, 'countTransaction']);
+```
+```
+public function countTransaction()
+{
+    $date = date("Y-m");
+    $data = DB::select('select count(id) as count from m_products where created_at like "%' . $date . '%";')[0];
+    return $data;
+}
+```
+```
+function profitSales() {
+
+    $.ajax({
+        url: '/home/profitsales',
+        type: "GET",
+        dataType: "JSON",
+        success: function(data) {
+            document.getElementById('profitSales').innerHTML = "Rp. " + (data.count.toLocaleString());
+        },
+        error: function(jqXHR, textStatus, errorThrown) {}
+    });
+}
+```
+
+#
+#### Select to Array 1D
+```
+DB::table('models')->where('id', '>', 0)->pluck('id')->toArray();
+```
+```
+Models::where('id', '>', 0)->lists('id')->toArray();
+```
+```
+[1,2,3,4,5,6]
+```
+
 
 ---
 
