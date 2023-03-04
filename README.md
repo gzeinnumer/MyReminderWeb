@@ -1193,6 +1193,12 @@ function myItemNameSearch(Request $r)
 |<img src="/preview/preview2.png" width="300"/>|
 |--|
 
+#
+#### JQUERY
+```
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+```
+
 
 ---
 
