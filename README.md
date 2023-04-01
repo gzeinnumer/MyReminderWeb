@@ -1199,6 +1199,50 @@ function myItemNameSearch(Request $r)
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 ```
 
+#
+#### Laravel Current Time
+```php
+$cTime = Carbon::now()->format('Y-m-d H:i:s');
+```
+
+#
+#### Ajax Error
+```js
+error: function(xhr, status, error) {
+  var err = JSON.parse(xhr.responseText);
+  alert(err.Message);
+}
+```
+
+#
+### Ajax
+```
+$.getJSON('titik/json', function(data) {
+    $.each(data, function(index) {
+
+    });
+});
+```
+
+```json
+{
+  "id": 1,
+  "nama": "Lokasi Z",
+  "alamat": "Z aja",
+  "gambar": "gak ada",
+  "created_at": null,
+  "updated_at": null
+}
+```
+```js
+$.getJSON("titik/lokasi/" + feature.properties.id, function(data) {
+    console.log(data);
+    $.each(data, function(index) {
+         console.log(data[index]);
+    });
+});
+```
+
 
 ---
 
